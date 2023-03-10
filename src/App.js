@@ -2,6 +2,53 @@
 function App() {
   return (
     <div className="wrapper clear">
+      <div className='overlay'>
+        <div className='drawer'>
+          <h2 className='mb-30'>Cart</h2>
+         <div className='items'>
+         <div className='cartItem d-flex align-center mb-20'>
+          <div style={{backgroundImage:'url(/img/sneakers/sneak1.webp)'}}className='cartItemImg'></div>
+
+            <div className='mr-20 flex '>
+              <p className='mb-5'>Мужские кроссовки Nike Sneaker1</p>
+              <b>12 999 rub.</b>
+              </div>
+              <img className='removeBtn' width={13} height={13} src='/img/cross.svg' alt='delItem'/>
+            
+          </div>
+
+          <div className='cartItem d-flex align-center mb-20'>
+          <div style={{backgroundImage:'url(/img/sneakers/sneak2.webp)'}}className='cartItemImg'></div>
+
+            <div className='mr-20 flex '>
+
+              <p className='mb-5'>Мужские кроссовки Nike Sneaker2</p>
+              <b>12 999 rub.</b>
+              </div>
+              <img className='removeBtn' width={13} height={13} src='/img/cross.svg' alt='delItem'/>
+    
+            
+          </div>
+         </div>
+         <div className='cartTotalBlock'>
+        <ul >
+            <li className='d-flex'>
+              <span>Cost:</span>
+              <div></div>
+              <b>21 498 rub.</b>
+            </li>
+            <li className='d-flex'>
+              <span>Duty 5%</span>
+              <div></div>
+              <b>1074 rub.</b>
+            </li>
+            
+            </ul>
+          <button className='greenButton'>Order <img width={15} height={15} src='/img/angle-right.svg' alt='Arrow'/></button>
+          </div>
+        </div>
+      </div>
+
       <header className="d-flex justify-between align-center p-40">
         <div className="d-flex align-center">
         <img width= {40} height={40} src='/img/logo.png' alt="logo"/>
@@ -21,9 +68,18 @@ function App() {
 
       </header>
       <div className="content p-40">
-        <h1 className="mb-40">All sneakers</h1>
+        <div className='d-flex align-center justify-between mb-40'>
+          <h1 >All sneakers</h1>
+          <div className='search-block d-flex align-center'>
+            <img width={15} height={15}src='/img/search.svg' alt='Search'/>
+            <input placeholder='Search'/>
+          </div>
+        </div>
         <div className="d-flex">
         <div className="card">
+          <div className='favorite'>
+          <img width={14} height={14}src='/img/heart.svg' alt='Unliked'/>
+          </div>
           <img width={133} height={112}src ='/img/sneakers/sneak1.webp' alt="Sneakers"/>
           <h5>Мужские кроссовки Nike Sneaker1</h5>
           <div className="d-flex justify-between align-center">
@@ -38,7 +94,7 @@ function App() {
         </div>
         <div className="card">
           <img width={133} height={112}src ='/img/sneakers/sneak2.webp' alt="Sneakers"/>
-          <h5>Мужские кроссовки Nike Sneaker1</h5>
+          <h5>Мужские кроссовки Nike Sneaker2</h5>
           <div className="d-flex justify-between align-center">
             <div className="d-flex flex-column">
               <span>Цена:</span>
@@ -51,7 +107,7 @@ function App() {
         </div>
         <div className="card">
           <img width={133} height={112}src ='/img/sneakers/sneak3.jpg' alt="Sneakers"/>
-          <h5>Мужские кроссовки Nike Sneaker1</h5>
+          <h5>Мужские кроссовки Nike Sneaker3</h5>
           <div className="d-flex justify-between align-center">
             <div className="d-flex flex-column">
               <span>Цена:</span>
@@ -64,7 +120,7 @@ function App() {
         </div>
         <div className="card">
           <img width={133} height={112}src ='/img/sneakers/sneak4.webp' alt="Sneakers"/>
-          <h5>Мужские кроссовки Nike Sneaker1</h5>
+          <h5>Мужские кроссовки Nike Sneaker4</h5>
           <div className="d-flex justify-between align-center">
             <div className="d-flex flex-column">
               <span>Цена:</span>
