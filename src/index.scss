@@ -105,15 +105,22 @@ header{
 }
 
 .drawer{
-  position: absolute;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
+  position: absolute;
   right: 0;
   height: 100%;
   width: 420px;
   background: #ffffff;
   box-shadow: -10px 4px 24px rgba(0,0,0,0.1);
   padding: 30px;
+ 
+
+  .items{
+    flex: 1;
+    overflow: auto;
+    margin-bottom: 40px;
+  }
 
   h2{
     margin: 0;
@@ -123,6 +130,7 @@ header{
 
 .cartTotalBlock{
   ul{
+
     margin-bottom: 40px !important;
   li{
     display: flex;
