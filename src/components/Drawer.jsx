@@ -1,10 +1,14 @@
-function Drawer() {
+function Drawer(props) {
+  const { onClose = Function.prototype, items = [] } = props;
+  console.log(items);
+
   return (
-    <div style={{ display: "none" }} className="overlay">
+    <div className="overlay">
       <div className="drawer ">
         <h2 className="mb-30 d-flex justify-between ">
           Cart
           <img
+            onClick={onClose}
             className="removeBtn cu-p"
             width={13}
             height={13}
@@ -14,43 +18,26 @@ function Drawer() {
         </h2>
 
         <div className="items">
-          <div className="cartItem d-flex align-center mb-20">
-            <div
-              style={{ backgroundImage: "url(/img/sneakers/sneak1.webp)" }}
-              className="cartItemImg"
-            ></div>
+          {items.map((item) => (
+            <div className="cartItem d-flex align-center mb-20">
+              <div
+                style={{ backgroundImage: `url(${item.imageUrl})` }}
+                className="cartItemImg"
+              ></div>
 
-            <div className="mr-20 flex ">
-              <p className="mb-5">Мужские кроссовки Nike Sneaker1</p>
-              <b>12 999 rub.</b>
+              <div className="mr-20 flex ">
+                <p className="mb-5">{item.name}</p>
+                <b>{item.price} rub.</b>
+              </div>
+              <img
+                className="removeBtn"
+                width={13}
+                height={13}
+                src="/img/cross.svg"
+                alt="delItem"
+              />
             </div>
-            <img
-              className="removeBtn"
-              width={13}
-              height={13}
-              src="/img/cross.svg"
-              alt="delItem"
-            />
-          </div>
-
-          <div className="cartItem d-flex align-center mb-20">
-            <div
-              style={{ backgroundImage: "url(/img/sneakers/sneak2.webp)" }}
-              className="cartItemImg"
-            ></div>
-
-            <div className="mr-20 flex ">
-              <p className="mb-5">Мужские кроссовки Nike Sneaker2</p>
-              <b>12 999 rub.</b>
-            </div>
-            <img
-              className="removeBtn"
-              width={13}
-              height={13}
-              src="/img/cross.svg"
-              alt="delItem"
-            />
-          </div>
+          ))}
         </div>
         <div className="cartTotalBlock">
           <ul>

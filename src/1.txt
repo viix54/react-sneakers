@@ -1,0 +1,31 @@
+{
+  "name":"Мужские кроссовки Nike Sneaker 1",
+  "price": 12999,
+  "imageUrl":"/img/sneakers/sneak1.webp"
+},
+ {"name":"Мужские кроссовки Nike Sneaker 2", 
+ "price":9999,
+ "imageUrl":"/img/sneakers/sneak2.webp"
+},{"name":"Мужские кроссовки Nike Sneaker 3", 
+"price":6800,
+"imageUrl":"/img/sneakers/sneak3.jpg"
+},{"name":"Мужские кроссовки Nike Sneaker 4", 
+"price":1200,
+"imageUrl":"/img/sneakers/sneak4.webp"
+},
+{"name":"Мужские кроссовки Nike Sneaker 5", 
+"price":980,
+"imageUrl":"/img/sneakers/sneak5.jpg"
+},
+{"name":"Мужские кроссовки Nike Sneaker 6", 
+"price":1800,
+"imageUrl":"/img/sneakers/sneak6.png"
+},
+{"name":"Мужские кроссовки Nike Sneaker 7", 
+"price":1289,
+"imageUrl":"/img/sneakers/sneak7.png"
+},
+{"name":"Мужские кроссовки Nike Sneaker 8", 
+"price":1650,
+"imageUrl":"/img/sneakers/sneak8.webp"
+}
