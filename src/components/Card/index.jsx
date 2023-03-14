@@ -1,5 +1,6 @@
 import styles from "./Card.module.scss";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 console.log(styles);
 
@@ -7,6 +8,7 @@ function Card(props) {
   const { name, price, imageUrl, onPlus, onFavorite } = props;
 
   const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const onClickPlus = () => {
     onPlus({ name, price, imageUrl });
@@ -15,6 +17,11 @@ function Card(props) {
 
   useEffect(() => {}, [isAdded]);
 
+  const onClickFavorite = () => {
+    onFavorite({ name, price, imageUrl });
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className={styles.card}>
       <div className="favorite">
@@ -22,9 +29,9 @@ function Card(props) {
           style={{ cursor: "pointer" }}
           width={14}
           height={14}
-          src="/img/heart.svg"
+          src={isFavorite ? "/img/heart_add.svg" : "/img/heart.svg"}
           alt="Unliked"
-          onClick={onFavorite}
+          onClick={onClickFavorite}
         />
       </div>
       <img width={133} height={112} src={imageUrl} alt="Sneakers" />
