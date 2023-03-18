@@ -2,6 +2,7 @@
   "name": "react-sneakes",
   "version": "0.1.0",
   "private": true,
+  "proxy":"https://640e0f48b07afc3b0dbe173c.mockapi.io",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

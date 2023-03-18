@@ -5,10 +5,18 @@ import axios from "axios";
 console.log(styles);
 
 function Card(props) {
-  const { name, price, imageUrl, onPlus, onFavorite } = props;
+  const {
+    id,
+    name,
+    price,
+    imageUrl,
+    onPlus,
+    onFavorite,
+    favorited = false,
+  } = props;
 
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorited);
 
   const onClickPlus = () => {
     onPlus({ name, price, imageUrl });
@@ -18,7 +26,7 @@ function Card(props) {
   useEffect(() => {}, [isAdded]);
 
   const onClickFavorite = () => {
-    onFavorite({ name, price, imageUrl });
+    onFavorite({ id, name, price, imageUrl });
     setIsFavorite(!isFavorite);
   };
 
