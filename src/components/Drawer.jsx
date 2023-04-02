@@ -20,7 +20,10 @@ function Drawer(props) {
           <>
             <div className="items">
               {items.map((item) => (
-                <div className="cartItem d-flex align-center mb-20">
+                <div
+                  key={item.id}
+                  className="cartItem d-flex align-center mb-20"
+                >
                   <div
                     style={{ backgroundImage: `url(${item.imageUrl})` }}
                     className="cartItemImg"

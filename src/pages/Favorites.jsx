@@ -1,8 +1,11 @@
 import Card from "../components/Card/index";
+import React from "react";
+import { AppContext } from "../App";
 
 function Favorites(props) {
-  const { sneakers = [], onAddToFavorite } = props;
-  console.log(sneakers);
+  const { onAddToFavorite } = props;
+
+  const { favorites } = React.useContext(AppContext);
 
   return (
     <div className="content p-40">
@@ -11,7 +14,7 @@ function Favorites(props) {
       </div>
       <div className="d-flex flex-wrap">
         <div className="d-flex flex-wrap">
-          {sneakers.map((el) => (
+          {favorites.map((el) => (
             <Card
               key={el.imageUrl}
               favorited={true}
