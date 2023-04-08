@@ -29,10 +29,12 @@ function App() {
 
       setIsLoading(false);
 
-      setCartItems(cartResponse.data);
       setFavorites(favoriteResponse.data);
+  
+      setCartItems(cartResponse.data);
+    
       setSneakers(itemsResponse.data);
-      
+    
      }
 
      fetchData()
@@ -68,29 +70,35 @@ function App() {
   }
 
   const onAddToFavorite = async(obj) => {
-
     try{
       if (favorites.find(el => el.name === obj.name)) {
-        axios.delete(`https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite/${obj.id}`)
+        console.log()
+        axios.delete(`https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite/${favorites.find(el => el.name === obj.name).id}`)
         setFavorites(prev => prev.filter(item => item.name !== obj.name))
         
       } else {
-        
         const {data} = await axios.post(`https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite`,obj);        
         setFavorites(prev => [...prev,data])
-        // console.log(favorites)
+        
       }
     } catch (error){
       alert(`The system can\`t add this objekt !`)
     }
   };
 
-  const isItemAdded = (id) =>{
-    return cartItems.some(obj => Number(obj.id) === Number(id))
+  const isItemAdded = (el) =>{
+    return cartItems.some(obj => obj.name === el.name)
   }
 
+  const isFavoriteAdded = (el) =>{
+  
+    return favorites.some(obj => obj.name === el.name)
+  }
+
+  
+
   return (
-    <AppContext.Provider value={{cartItems,favorites,sneakers,isItemAdded}}>
+    <AppContext.Provider value={{cartItems,favorites,sneakers,isItemAdded,isFavoriteAdded,setCartOpened,setCartItems}}>
       <Router>
         <div className="wrapper clear">
           

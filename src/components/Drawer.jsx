@@ -1,5 +1,41 @@
+import { AppContext } from "../App";
+import Info from "./Info";
+import { useState, useContext } from "react";
+import axios from "axios";
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Drawer(props) {
+  const [isComplete, setIsOrderComplete] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { onClose = Function.prototype, items = [], deleteFromCart } = props;
+
+  const { cartItems, setCartItems } = useContext(AppContext);
+
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post(
+        "https://6410b271ff89c2e2d4e68d77.mockapi.io/orders",
+        { items: cartItems }
+      );
+
+      setOrderId(data.id);
+      setIsOrderComplete(true);
+      setCartItems([]);
+
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i];
+        await axios.delete("/cart/" + item.id);
+        await delay(1000);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(`Order didn't make, sorry !`);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <div className="overlay">
@@ -57,7 +93,11 @@ function Drawer(props) {
                   <b>1074 rub.</b>
                 </li>
               </ul>
-              <button className="greenButton">
+              <button
+                disabled={isLoading}
+                className="greenButton"
+                onClick={onClickOrder}
+              >
                 Order{" "}
                 <img
                   width={15}
@@ -69,29 +109,17 @@ function Drawer(props) {
             </div>
           </>
         ) : (
-          <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-            <img
-              className="mb-20"
-              width="120px"
-              height="120px"
-              src="/img/empty_cart.png"
-              alt="emptyBox"
-            />
-
-            <h2>Empty cart</h2>
-            <p className="opacit-6">
-              Add at least one paar of shoes to make an order
-            </p>
-            <button className="greenButton" onClick={onClose}>
-              <img
-                width="12px"
-                height="12px"
-                src="/img/arrow_back.svg"
-                alt="Arrow"
-              />
-              Go back
-            </button>
-          </div>
+          <Info
+            title={isComplete ? "Items are ordered" : "Empty Box"}
+            description={
+              isComplete
+                ? `Your order #${+orderId + 1}. It'll be soon on delivery place`
+                : "Add at least one paar of shoes to make an order"
+            }
+            image={
+              isComplete ? "/img/new-order-icon-5.jpg" : "/img/empty_cart.png"
+            }
+          />
         )}
       </div>
     </div>

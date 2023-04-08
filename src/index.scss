@@ -121,11 +121,14 @@ header{
       margin: 0 7px;
     }
   }
-
-  
   }
+
   .greenButton{
     position: relative;
+
+    &:disabled{
+      animation: button-loading 0,2s ease-in-out infinite;
+    }
 
     &:hover{
       img{
@@ -193,6 +196,8 @@ header{
   .greenButton{
     position: relative;
 
+    
+
     &:hover{
       img{
         transform: translateX(5px);
@@ -243,4 +248,33 @@ header{
   
 }
 
+
+
+.loader{
+  width: 100px;
+  height: 100px;
+  border: 10px solid rgba(231, 246, 255, 1);;
+  border-radius: 50%;
+  border-left-color: rgb(0, 170, 255);
+  animation: loader 1.3s linear infinite;
+}
+
+@keyframes loader {
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes button-loading {
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.5;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
 

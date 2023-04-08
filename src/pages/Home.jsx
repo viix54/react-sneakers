@@ -5,7 +5,6 @@ import { useContext } from "react";
 function Home(props) {
   const {
     sneakers,
-    cartItems,
     searchValue,
     onChangeSearcInput,
     onAddToCart,
@@ -14,7 +13,7 @@ function Home(props) {
     isLoading,
   } = props;
 
-  const { isItemAdded } = useContext(AppContext);
+  const { isFavoriteAdded } = useContext(AppContext);
 
   const renderItems = () => {
     const filteredSneakers =
@@ -22,22 +21,26 @@ function Home(props) {
       sneakers.filter((sneak) =>
         sneak.name.toLowerCase().includes(searchValue.toLowerCase())
       );
-    return (isLoading ? [...Array(10)] : filteredSneakers).map((el, index) => (
-      <Card
-        key={index}
-        {...el}
-        onPlus={(obj) => {
-          onAddToCart(obj);
-        }}
-        onFavorite={(obj) => onAddToFavorite(obj)}
-        added={isItemAdded(item.id)}
-        loading={isLoading}
-      />
-    ));
+    return isLoading ? (
+      <div className="loader"></div>
+    ) : (
+      filteredSneakers.map((el, index) => (
+        <Card
+          key={index}
+          {...el}
+          onPlus={(obj) => {
+            onAddToCart(obj);
+          }}
+          onFavorite={(obj) => onAddToFavorite(obj)}
+          favorited={isFavoriteAdded(el)}
+          loading={isLoading}
+        />
+      ))
+    );
   };
 
   return (
-    <div className="content p-40">
+    <div className=" content p-40">
       <div className="d-flex align-center justify-between mb-40">
         <h1>{searchValue ? `Search for: ${searchValue}` : "All sneakers"}</h1>
         <div className="search-block d-flex align-center">
@@ -59,7 +62,9 @@ function Home(props) {
           />
         </div>
       </div>
-      <div className="d-flex flex-wrap">{renderItems()}</div>
+      <div className="d-flex flex-wrap justify-center align-center">
+        {renderItems()}
+      </div>
     </div>
   );
 }
