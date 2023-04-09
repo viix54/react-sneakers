@@ -44,14 +44,14 @@ function Home(props) {
       <div className="d-flex align-center justify-between mb-40">
         <h1>{searchValue ? `Search for: ${searchValue}` : "All sneakers"}</h1>
         <div className="search-block d-flex align-center">
-          <img width={15} height={15} src="/img/search.svg" alt="Search" />
+          <img width={15} height={15} src="img/search.svg" alt="Search" />
           {searchValue && (
             <img
               onClick={() => setSearchValue("")}
               className="clear cu-p"
               width={13}
               height={13}
-              src="/img/cross.svg"
+              src="img/cross.svg"
               alt="clear"
             />
           )}

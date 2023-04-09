@@ -55,7 +55,7 @@ function Card(props) {
                 style={{ cursor: "pointer" }}
                 width={14}
                 height={14}
-                src={isFavorite ? "/img/heart_add.svg" : "/img/heart.svg"}
+                src={isFavorite ? "img/heart_add.svg" : "img/heart.svg"}
                 alt="Unliked"
                 onClick={onClickFavorite}
               />
@@ -75,9 +75,7 @@ function Card(props) {
                 onClick={onClickPlus}
                 width={11}
                 height={11}
-                src={
-                  isItemAdded({ id }) ? "/img/addedCard.svg" : "/img/plus.svg"
-                }
+                src={isItemAdded({ id }) ? "img/addedCard.svg" : "img/plus.svg"}
                 alt="plus"
               />
             )}

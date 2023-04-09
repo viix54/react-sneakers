@@ -36,7 +36,7 @@ function Drawer(props) {
 
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
-        await axios.delete("/cart/" + item.id);
+        await axios.delete("https://640e0f48b07afc3b0dbe173c.mockapi.io/cart/" + item.id);
         await delay(1000);
       }
     } catch (error) {
@@ -56,7 +56,7 @@ function Drawer(props) {
             className="removeBtn cu-p"
             width={13}
             height={13}
-            src="/img/cross.svg"
+            src="img/cross.svg"
             alt="delItem"
           />
         </h2>
@@ -82,7 +82,7 @@ function Drawer(props) {
                     className="removeBtn"
                     width={13}
                     height={13}
-                    src="/img/cross.svg"
+                    src="img/cross.svg"
                     alt="delItem"
                     onClick={() => deleteFromCart(item.id)}
                   />
@@ -111,7 +111,7 @@ function Drawer(props) {
                 <img
                   width={15}
                   height={15}
-                  src="/img/angle-right.svg"
+                  src="img/angle-right.svg"
                   alt="Arrow"
                 />
               </button>
@@ -126,7 +126,7 @@ function Drawer(props) {
                 : "Add at least one paar of shoes to make an order"
             }
             image={
-              isComplete ? "/img/new-order-icon-5.jpg" : "/img/empty_cart.png"
+              isComplete ? "img/new-order-icon-5.jpg" : "img/empty_cart.png"
             }
           />
         )}

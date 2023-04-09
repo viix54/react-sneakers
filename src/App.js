@@ -25,7 +25,7 @@ function App() {
      async function fetchData(){
       try {
         setIsLoading(true); // if fetchData is evaluating more then once
-      const [cartResponse,favoriteResponse,itemsResponse] = await Promise.all([axios.get('/cart'),axios.get('https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite'),axios.get('/items')])
+      const [cartResponse,favoriteResponse,itemsResponse] = await Promise.all([axios.get('https://640e0f48b07afc3b0dbe173c.mockapi.io/cart'),axios.get('https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite'),axios.get('https://640e0f48b07afc3b0dbe173c.mockapi.io/items')])
       setIsLoading(false);
 
       setFavorites(favoriteResponse.data);
@@ -51,11 +51,11 @@ function App() {
   const onAddToCart =async(obj)=>{
     try {
       if (cartItems.find(el => el.name === obj.name)){
-        await axios.delete(`/cart/${cartItems.find(el => el.name === obj.name).id}`)
+        await axios.delete(`https://640e0f48b07afc3b0dbe173c.mockapi.io/cart/${cartItems.find(el => el.name === obj.name).id}`)
         setCartItems(prev => prev.filter(item => item.name !== obj.name));
       }else{
         setCartItems (prev=>[...prev,obj]);
-        const {data} = await axios.post('/cart',obj);
+        const {data} = await axios.post('https://640e0f48b07afc3b0dbe173c.mockapi.io/cart',obj);
         setCartItems(prev => prev.map(item=>{
           if(item.parentId === data.parentId){
             return {
@@ -75,7 +75,7 @@ function App() {
 
   const deleteFromCart = async (id)=>{
     try {
-      await axios.delete(`/cart/${id}`)
+      await axios.delete(`https://640e0f48b07afc3b0dbe173c.mockapi.io/cart/${id}`)
       setCartItems(prev=>prev.filter(item=>item.id !==id))
     } catch (error) {
       alert(`The system couldn't delete item from basket !`);

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://viix54.github.io/react-sneakers/",
-  "proxy": "https://640e0f48b07afc3b0dbe173c.mockapi.io",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
