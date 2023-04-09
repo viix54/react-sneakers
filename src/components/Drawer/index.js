@@ -1,7 +1,11 @@
-import { AppContext } from "../App";
-import Info from "./Info";
-import { useState, useContext } from "react";
+import Info from "../Info";
+import { useState } from "react";
 import axios from "axios";
+import { useCart } from "../../hooksx/useCart";
+
+import styles from "./Drawer.module.scss";
+
+console.log(styles.overlay)
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -9,9 +13,14 @@ function Drawer(props) {
   const [isComplete, setIsOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { onClose = Function.prototype, items = [], deleteFromCart } = props;
+  const {
+    onClose = Function.prototype,
+    items = [],
+    deleteFromCart,
+    opened,
+  } = props;
 
-  const { cartItems, setCartItems } = useContext(AppContext);
+  const { cartItems, setCartItems, totalPrice } = useCart();
 
   const onClickOrder = async () => {
     try {
@@ -38,8 +47,8 @@ function Drawer(props) {
   };
 
   return (
-    <div className="overlay">
-      <div className="drawer ">
+    <div className={`${styles.overlay} ${opened?styles.overlayVisible:''}`}>
+      <div className={`${styles.drawer}`}>
         <h2 className="mb-30 d-flex justify-between ">
           Cart
           <img
@@ -85,12 +94,12 @@ function Drawer(props) {
                 <li>
                   <span>Cost:</span>
                   <div></div>
-                  <b>21 498 rub.</b>
+                  <b>{totalPrice} rub.</b>
                 </li>
                 <li>
                   <span>Duty 5%</span>
                   <div></div>
-                  <b>1074 rub.</b>
+                  <b>{totalPrice * 0.05} rub.</b>
                 </li>
               </ul>
               <button

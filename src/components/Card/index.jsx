@@ -18,13 +18,14 @@ function Card(props) {
 
   const { isItemAdded } = useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(favorited);
+  const objCard = { id, parentId: id, name, price, imageUrl };
 
   const onClickPlus = () => {
-    onPlus({ id, name, price, imageUrl });
+    onPlus(objCard);
   };
 
   const onClickFavorite = () => {
-    onFavorite({ id, name, price, imageUrl });
+    onFavorite(objCard);
     setIsFavorite(!isFavorite);
   };
 
@@ -48,16 +49,18 @@ function Card(props) {
         </ContentLoader>
       ) : (
         <>
-          <div className="favorite">
-            <img
-              style={{ cursor: "pointer" }}
-              width={14}
-              height={14}
-              src={isFavorite ? "/img/heart_add.svg" : "/img/heart.svg"}
-              alt="Unliked"
-              onClick={onClickFavorite}
-            />
-          </div>
+          {onFavorite && (
+            <div className="favorite">
+              <img
+                style={{ cursor: "pointer" }}
+                width={14}
+                height={14}
+                src={isFavorite ? "/img/heart_add.svg" : "/img/heart.svg"}
+                alt="Unliked"
+                onClick={onClickFavorite}
+              />
+            </div>
+          )}
           <img width={`100%`} height={130} src={imageUrl} alt="Sneakers" />
           <h5>{name}</h5>
           <div className="d-flex justify-between align-center">
@@ -66,16 +69,18 @@ function Card(props) {
               <b>{price} rub.</b>
             </div>
 
-            <img
-              className={styles.plus}
-              onClick={onClickPlus}
-              width={11}
-              height={11}
-              src={
-                isItemAdded({ name }) ? "/img/addedCard.svg" : "/img/plus.svg"
-              }
-              alt="plus"
-            />
+            {onPlus && (
+              <img
+                className={styles.plus}
+                onClick={onClickPlus}
+                width={11}
+                height={11}
+                src={
+                  isItemAdded({ id }) ? "/img/addedCard.svg" : "/img/plus.svg"
+                }
+                alt="plus"
+              />
+            )}
           </div>
         </>
       )}

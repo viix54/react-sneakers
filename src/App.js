@@ -6,6 +6,7 @@ import axios from 'axios'
 import {Routes,Route} from 'react-router-dom'
 import Home from './pages/Home'
 import {BrowserRouter as Router} from 'react-router-dom'
+import { Orders } from "./pages/Orders";
 
 export const AppContext = React.createContext({});
 
@@ -22,11 +23,9 @@ function App() {
 
   useEffect(()=>{
      async function fetchData(){
-      setIsLoading(true); // if fetchData is evaluating more then once
-      const cartResponse = await axios.get('/cart');
-      const favoriteResponse = await axios.get('https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite');
-      const itemsResponse =await axios.get('/items');
-
+      try {
+        setIsLoading(true); // if fetchData is evaluating more then once
+      const [cartResponse,favoriteResponse,itemsResponse] = await Promise.all([axios.get('/cart'),axios.get('https://6410b271ff89c2e2d4e68d77.mockapi.io/favorite'),axios.get('/items')])
       setIsLoading(false);
 
       setFavorites(favoriteResponse.data);
@@ -34,6 +33,10 @@ function App() {
       setCartItems(cartResponse.data);
     
       setSneakers(itemsResponse.data);
+      } catch (error) {
+        alert(`Data's loading failed`);
+        console.error(error)
+      }
     
      }
 
@@ -46,27 +49,38 @@ function App() {
   
 
   const onAddToCart =async(obj)=>{
-    // try {
-      if (cartItems.find(el => Number(el.id) === Number(obj.id))){
-        axios.delete(`/cart/${obj.id}`)
-        setCartItems(prev => prev.filter(objItem => Number(objItem.id) !== Number(obj.id)));
+    try {
+      if (cartItems.find(el => el.name === obj.name)){
+        await axios.delete(`/cart/${cartItems.find(el => el.name === obj.name).id}`)
+        setCartItems(prev => prev.filter(item => item.name !== obj.name));
       }else{
+        setCartItems (prev=>[...prev,obj]);
         const {data} = await axios.post('/cart',obj);
-        setCartItems(prev=> [
-          ...prev,
-          data
-        ])
+        setCartItems(prev => prev.map(item=>{
+          if(item.parentId === data.parentId){
+            return {
+              ...item,
+              id: data.id
+            }
+          }
+          return item;
+        }))
       }
+    } catch (error) {
+      alert(`The system couldn't add this item to basket`);
+      console.error(error)
+    }
+      
   }
 
-  const deleteFromCart = (id)=>{
-    axios.delete(`/cart/${id}`)
-    setCartItems(prev=>prev.filter(item=>item.id !==id))
-    // setCartItems(prev=> [
-    //   ...prev,
-    //   obj
-    // ])
-    // console.log(setCartItems(prev=>prev.filter(cart=>cart.name !== name)));
+  const deleteFromCart = async (id)=>{
+    try {
+      await axios.delete(`/cart/${id}`)
+      setCartItems(prev=>prev.filter(item=>item.id !==id))
+    } catch (error) {
+      alert(`The system couldn't delete item from basket !`);
+      console.error(error)
+    }
   }
 
   const onAddToFavorite = async(obj) => {
@@ -87,7 +101,7 @@ function App() {
   };
 
   const isItemAdded = (el) =>{
-    return cartItems.some(obj => obj.name === el.name)
+    return cartItems.some(obj => obj.parentId === el.id)
   }
 
   const isFavoriteAdded = (el) =>{
@@ -98,11 +112,11 @@ function App() {
   
 
   return (
-    <AppContext.Provider value={{cartItems,favorites,sneakers,isItemAdded,isFavoriteAdded,setCartOpened,setCartItems}}>
+    <AppContext.Provider value={{cartItems,favorites,sneakers,isItemAdded,isFavoriteAdded,setCartOpened,setCartItems, onAddToFavorite,onAddToCart}}>
       <Router>
         <div className="wrapper clear">
-          
-          {cartOpened&&<Drawer items = {cartItems} onClose={()=>setCartOpened(false)} deleteFromCart={deleteFromCart}/>}
+           <Drawer items = {cartItems} onClose={()=>setCartOpened(false)} deleteFromCart={deleteFromCart} opened={cartOpened}/>
+        
           
           <Header onClickCart={()=>setCartOpened(true)} />
           
@@ -110,6 +124,7 @@ function App() {
                 <Route path="/" element={ <Home cartItems = {cartItems}sneakers={sneakers} searchValue={searchValue} setSearchValue={setSearchValue} onChangeSearcInput={onChangeSearcInput} onAddToFavorite={onAddToFavorite} onAddToCart={onAddToCart} isLoading = {isLoading}/>} />
                 
                 <Route path="/favorites" element={<Favorites  onAddToFavorite={onAddToFavorite}/>}/>
+                <Route path="/orders" element={<Orders/>}/>
               </Routes>
           
         </div> 
